@@ -111,5 +111,20 @@ void main() {
       );
       expect(results.length, 1);
     });
+
+    test('check if findById for a document works', () async {
+      final documentId = generateId();
+      await cosmos.documents.create(
+        databaseId,
+        collectionId,
+        {
+          'id': documentId,
+          'test': true,
+        },
+      );
+      final document =
+          await cosmos.documents.findById(databaseId, collectionId, documentId);
+      expect(document['id'], equals(documentId));
+    });
   });
 }
